@@ -1,8 +1,9 @@
+#include <algorithm>
 #include <fstream>
 #include <iostream>
+#include <stack>
 #include <vector>
 
-#include <stack>
 using namespace std;
 
 struct nodo {
@@ -11,60 +12,84 @@ struct nodo {
 
 int N, M;
 
+vector<int> componentiFortConnesse(vector<nodo> &);
 void compConnDFS(vector<nodo> &, int, int &, vector<int> &);
 vector<int> componentiConnesse(vector<nodo> &, stack<int> &);
+void topSort(vector<nodo> &, stack<int> &);
+void topSortDFS(vector<nodo> &, int &, vector<bool> &, stack<int> &);
+void stampaGrafo(vector<nodo> &);
 
 int main() {
     ifstream in("input.txt");
     ofstream out("output.txt");
 
-    vector<nodo> grafo;
-    stack<int> permutazNodiGrafo;
-    vector<int> vettoreCompConnesse;
-    int numCompConnesse;
-
     in >> N >> M;
 
-    grafo.resize(N);
+    vector<nodo> grafo(N);
+    vector<int> vettoreCompFortConnesse;
+    int dimMaxCompConn;
+    int numCompConnesse;
 
-    // prendo grafo da input
+    // Prendo grafo da input
     for (int j = 0; j < M; j++) {
         int from, to;
         in >> from >> to;
         grafo[from].vic.push_back(to);
     }
 
-    // Hard-coding permutazione grafo (permutazione banale)
+    // Stampo grafo
+    cout << "-- STAMPO GRAFO --" << endl;
+    stampaGrafo(grafo);
+
+    // calcolo componenti fortemente connesse
+    vettoreCompFortConnesse = componentiFortConnesse(grafo);
+
+    // stampo componenti fortemente connesse
     for (int i = 0; i < N; i++) {
-        permutazNodiGrafo.push(i);
+        cout << vettoreCompFortConnesse[i] << " ";
+    }
+    cout << endl;
+
+    // conto componenti connesse (massimo valore nel vettore)
+    numCompConnesse = *max_element(vettoreCompFortConnesse.begin(),
+                                   vettoreCompFortConnesse.end());
+    cout << "Il numero di componenti connesse è: " << numCompConnesse << endl;
+
+    // Calcolo dimensione della più grande componente fortemente connessa
+    vector<int> dimComponenti(numCompConnesse, 0);
+    for (auto i : vettoreCompFortConnesse) {
+        dimComponenti[i]++;
     }
 
-    // stampo grafo
-    for (int i = 0; i < N; i++) {
-        cout << "Nodo " << i << " ha " << grafo[i].vic.size() << " vicini"
-             << endl;
-        for (int v : grafo[i].vic) {
-            cout << "  " << v << endl;
+    dimMaxCompConn = *max_element(dimComponenti.begin(), dimComponenti.end());
+
+    cout << "La dimensionne della più grande componente fort. conn. è: "
+         << dimMaxCompConn << endl;
+
+    out << dimMaxCompConn << endl;
+
+    return 0;
+}
+
+// Calcolo delle componenti fortemente connesse
+vector<int> componentiFortConnesse(vector<nodo> &grafo) {
+    stack<int> permutazNodiGrafo;
+    vector<nodo> grafoTrasposto(grafo.size());
+    // Ordinamento topologico del grafo
+    topSort(grafo, permutazNodiGrafo);
+
+    // Calcolo grafo trasposto
+    for (int u = 0; u < N; u++) {
+        for (int v : grafo[u].vic) {
+            grafoTrasposto[v].vic.push_back(u);
         }
     }
 
-    // calcolo componenti connesse
-    vettoreCompConnesse = componentiConnesse(grafo, permutazNodiGrafo);
+    // Stampo grafo trasposto
+    cout << "-- STAMPO GRAFO TRASPOSTO --" << endl;
+    stampaGrafo(grafoTrasposto);
 
-    /*  // stampo componenti connesse
-     for (int i = 0; i < N; i++) {
-         cout << vettoreCompConnesse[i] << " ";
-     }
-     cout << endl; */
-
-    // conto componenti connesse (massimo valore nel vettore)
-    numCompConnesse =
-        *max_element(vettoreCompConnesse.begin(), vettoreCompConnesse.end());
-
-    // stampo numero componenti connesse
-    cout << "Il numero di componenti connesse è: " << numCompConnesse << endl;
-
-    return 0;
+    return componentiConnesse(grafoTrasposto, permutazNodiGrafo);
 }
 
 // Funzioni per il calcolo delle componenti connesse
@@ -115,4 +140,15 @@ void topSortDFS(vector<nodo> &G, int &u, vector<bool> &visitato,
         }
     }
     S.push(u);
+}
+
+// UTILITY
+
+void stampaGrafo(vector<nodo> &G) {
+    for (int i = 0; i < G.size(); i++) {
+        cout << "Nodo " << i << " ha " << G[i].vic.size() << " vicini" << endl;
+        for (int v : G[i].vic) {
+            cout << "  " << v << endl;
+        }
+    }
 }
