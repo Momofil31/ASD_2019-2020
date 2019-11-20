@@ -38,22 +38,25 @@ int main() {
     }
 
     // Stampo grafo
-    cout << "-- STAMPO GRAFO --" << endl;
-    stampaGrafo(grafo);
+    // cout << "-- STAMPO GRAFO --" << endl;
+    // stampaGrafo(grafo);
 
     // calcolo componenti fortemente connesse
     vettoreCompFortConnesse = componentiFortConnesse(grafo);
 
+    /*
     // stampo componenti fortemente connesse
     for (int i = 0; i < N; i++) {
         cout << vettoreCompFortConnesse[i] << " ";
     }
     cout << endl;
+    */
 
     // conto componenti connesse (massimo valore nel vettore)
     numCompConnesse = *max_element(vettoreCompFortConnesse.begin(),
                                    vettoreCompFortConnesse.end());
-    cout << "Il numero di componenti connesse è: " << numCompConnesse << endl;
+    // cout << "Il numero di componenti connesse è: " << numCompConnesse <<
+    // endl;
 
     // Calcolo dimensione della più grande componente fortemente connessa
     vector<int> dimComponenti(numCompConnesse, 0);
@@ -63,8 +66,8 @@ int main() {
 
     dimMaxCompConn = *max_element(dimComponenti.begin(), dimComponenti.end());
 
-    cout << "La dimensionne della più grande componente fort. conn. è: "
-         << dimMaxCompConn << endl;
+    // cout << "La dimensionne della più grande componente fort. conn. è: "
+    //<< dimMaxCompConn << endl;
 
     out << dimMaxCompConn << endl;
 
@@ -86,8 +89,8 @@ vector<int> componentiFortConnesse(vector<nodo> &grafo) {
     }
 
     // Stampo grafo trasposto
-    cout << "-- STAMPO GRAFO TRASPOSTO --" << endl;
-    stampaGrafo(grafoTrasposto);
+    // cout << "-- STAMPO GRAFO TRASPOSTO --" << endl;
+    // stampaGrafo(grafoTrasposto);
 
     return componentiConnesse(grafoTrasposto, permutazNodiGrafo);
 }
@@ -102,7 +105,7 @@ vector<int> componentiConnesse(vector<nodo> &G, stack<int> &S) {
         int u = S.top();
         S.pop();
         if (id[u] == 0) {
-            cout << "u = " << u << " e id[u] = " << id[u] << endl;
+            // cout << "u = " << u << " e id[u] = " << id[u] << endl;
             conta++;
             compConnDFS(G, conta, u, id);
         }
@@ -113,7 +116,7 @@ vector<int> componentiConnesse(vector<nodo> &G, stack<int> &S) {
 void compConnDFS(vector<nodo> &G, int conta, int &u, vector<int> &id) {
     id[u] = conta;
     for (auto v : G[u].vic) {
-        cout << "-- v = " << v << " e id[u] = " << id[v] << endl;
+        // cout << "-- v = " << v << " e id[u] = " << id[v] << endl;
         if (id[v] == 0) compConnDFS(G, conta, v, id);
     }
 }
