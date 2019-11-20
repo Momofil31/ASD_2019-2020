@@ -92,3 +92,27 @@ void compConnDFS(vector<nodo> &G, int conta, int &u, vector<int> &id) {
         if (id[v] == 0) compConnDFS(G, conta, v, id);
     }
 }
+
+// Funzioni per il calcolo dell'ordinamento topologico (TopSort)
+
+void topSort(vector<nodo> &G, stack<int> &S) {
+    vector<bool> visitato(N, false);
+    for (int u = 0; u < N; u++) {
+        if (!visitato[u]) {
+            if (!visitato[u]) {
+                topSortDFS(G, u, visitato, S);
+            }
+        }
+    }
+}
+
+void topSortDFS(vector<nodo> &G, int &u, vector<bool> &visitato,
+                stack<int> &S) {
+    visitato[u] = true;
+    for (auto v : G[u].vic) {
+        if (!visitato[v]) {
+            topSortDFS(G, v, visitato, S);
+        }
+    }
+    S.push(u);
+}
