@@ -1,0 +1,18 @@
+- l'imprenditore puo atterrare solo su nodi che fanno parte di un ciclo
+- il numero K di massimi pokemon da piazzare sulla mappa è la dimensione del ciclo più grande
+- posso disporre i pokemon all'interno del ciclo come voglio, basta che siano K diversi pokemon
+- i pokemon sulle strade posso intenderli come pesi, oppure gestirmeli su un array (maybe)
+
+idea di algoritmo:
+
+1- trovo i cicli
+2- su ogni ciclo calcolo la dimensione e mi tengo la massima
+    2.1 - la dimensione massima e' il numero di pokemon massimale K
+3- per ogni ciclo compilo le strade con un numero incrementale da 0 a K-1
+4- per le strade che restano senza numero ne metto uno a caso
+5- print in ordine
+
+problema! posso avere un ciclo grande con dentro un ciclo piu piccolo???
+
+
+cristian.consonni@unitn.it
