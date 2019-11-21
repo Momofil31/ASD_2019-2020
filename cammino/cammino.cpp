@@ -40,15 +40,21 @@ int main() {
     stampaGrafo(grafo);
 
     /*
-    int maxDist = 0;
-    vector<int> distanza;
+    // INEFFICIENTE perché chiama troppe volte topSort
+    // Calcolo massimo cammino ciclando sui nodi e calcolando l'array delle
+    // distanze per ogni nodo di partenza verso tutti gli altri nodi
+    int maxDist = 0; vector<int> distanza;
+
     for (int i = 0; i < N; i++) {
         distanza = longestPathFromNodeToAll(grafo, i);
         int tempDist = *max_element(distanza.begin(), distanza.end());
         if (tempDist > maxDist) maxDist = tempDist;
     }
     */
+
+    // calcolo il massimo cammino
     int maxDist = longestPath(grafo);
+
     // cout << "Il massimo cammino è: " << maxDist << endl;
 
     out << maxDist << endl;
@@ -56,11 +62,12 @@ int main() {
     return 0;
 }
 
-// Calcola il cammino più lungo da un nodo di partenza a ogni altro nodo in un
-// vettore di distanze
+// Calcola il cammino più lungo nel grafo G e lo ritorna
+// ottimizzazione per questo problema specifico di longestPathFromNodeToAll()
 int longestPath(vector<nodo> &G) {
-    stack<int> stackTS;  // stack per ordinamento topologico
-    vector<int> ordineTopologico;
+    stack<int> stackTS;            // stack per ordinamento topologico
+    vector<int> ordineTopologico;  // ordine topologico
+
     int maxDist = 0;
 
     // Calcolo un ordinamento topologico del grafo
@@ -101,6 +108,7 @@ int longestPath(vector<nodo> &G) {
 
 // Calcola il cammino più lungo da un nodo di partenza a ogni altro nodo in
 // un vettore di distanze
+// https://www.geeksforgeeks.org/find-longest-path-directed-acyclic-graph/
 vector<int> longestPathFromNodeToAll(vector<nodo> &G, const int &startNode) {
     vector<int> dist(M, INT_MIN);
     dist[startNode] = 0;
