@@ -51,11 +51,11 @@ int main() {
     vector<nodo> grafo;
     leggiGrafo(grafo);
     // Stampo grafo
-    cout << "-- STAMPO GRAFO --" << endl;
+    // cout << "-- STAMPO GRAFO --" << endl;
     stampaGrafo(grafo);
     int minDistanza = minPath(grafo, 0);
 
-    cout << "La distanza minima è: " << minDistanza << endl;
+    // cout << "La distanza minima è: " << minDistanza << endl;
     out << minDistanza << endl;
 
     // Se minDistanza è -1 non ho soluzione quindi interrompo
@@ -78,7 +78,7 @@ int main() {
     // svuoto lo stack estreaendo e stampando
     while (!stack.empty()) {
         out << stack.top() << endl;
-        cout << stack.top() << endl;
+        // cout << stack.top() << endl;
         stack.pop();
     }
 
@@ -142,9 +142,10 @@ void leggiGrafo(vector<nodo> &G) {
 
 void stampaGrafo(vector<nodo> &G) {
     for (int i = 0; i < G.size(); i++) {
-        cout << "Nodo " << i << " ha " << G[i].adj.size() << " vicini" << endl;
+        // cout << "Nodo " << i << " ha " << G[i].adj.size() << " vicini" <<
+        // endl;
         for (auto v : G[i].adj) {
-            cout << "  " << v.dest << " peso: " << v.weight << endl;
+            // cout << "  " << v.dest << " peso: " << v.weight << endl;
         }
     }
 }
