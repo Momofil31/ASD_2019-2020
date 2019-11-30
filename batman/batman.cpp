@@ -29,7 +29,6 @@ stack<int> topSort(vector<node>& grafo) {
             tsdfs(grafo, i, S);
         }
     }
-
     return S;
 }
 
@@ -132,20 +131,21 @@ int main() {
     // vettore dei nodi ordinati del grafo delle componenti
     vector<int> topOrderCCArray(grafocc.size(), 0);
 
-    vector<int> numPercorsi(topOrderCCArray.size());
-
     // svuoto lo stack nel vettore per rendere il tutto piu facile da scorrere
-
     while (!topcc.empty()) {
         topOrderCCArray.push_back(topcc.top());
-
         topcc.pop();
     }
+
+    // vettore che contiene il numero di percorsi dalla componente di parteza a
+    // ogni elemento
+    vector<int> numPercorsi(topOrderCCArray.size());
 
     // scorro il vettore dei nodi ordinati e conto il numero di percorsi dal
     // nodo componenteS
     // Il numero di percorsi di un nodo v `e la somma del numero di
     // percorsi dei predecessori
+
     numPercorsi[componenteS] = 1;
     for (auto elem : topOrderCCArray) {
         for (auto vicino : grafocc[elem].vic) {
