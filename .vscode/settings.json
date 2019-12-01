@@ -5,6 +5,8 @@
         "iterator": "cpp",
         "stack": "cpp",
         "iostream": "cpp",
-        "algorithm": "cpp"
+        "algorithm": "cpp",
+        "list": "cpp",
+        "ostream": "cpp"
     }
 }
