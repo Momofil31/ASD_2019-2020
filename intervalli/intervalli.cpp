@@ -1,3 +1,4 @@
+#include </Users/filippomomesso/.bits/stdc++.h>
 #include <algorithm>
 #include <fstream>
 #include <iostream>
@@ -25,7 +26,8 @@ int main() {
         j++;
         while (i < N - 1 && c <= ends[i]) {
             c++;
-            if (c == starts[i + 1]) i++;
+            if (c == starts[i + 1])
+                i++;
         }
         aux[j] = ends[i];
         j++;
